@@ -5,6 +5,26 @@
 		<title>meteo.gymlit.cz</title>
  
 		<link rel="stylesheet" href="{$baseUri}/css/screen.css" media="all">
+		<script src="{$baseUri}/js/jquery.js"></script>
+		<script src="{$baseUri}/js/nette.ajax.js"></script>
+
+		<script>
+			function reloadGraphs() {
+				var date = new Date();
+				$("img").each(function(el) {
+					var $el = $(this);
+					var src = $el.attr('src').replace(/\?timestamp=.*/, '');
+					console.log(src);
+					$el.attr('src', src + '?timestamp=' + date.getTime())
+				});
+
+				setTimeout(reloadGraphs, 5000);
+			}
+
+			$(document).ready(function () {
+				setTimeout(reloadGraphs, 5000);
+			});
+		</script>
 	</head>
 
 	<body>

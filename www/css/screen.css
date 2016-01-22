@@ -77,3 +77,7 @@ p.warning {
 div.cb {
 	clear: both;
 }
+
+span.units {
+	font-size: 0.8em;
+}

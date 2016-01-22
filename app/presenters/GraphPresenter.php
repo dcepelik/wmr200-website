@@ -14,12 +14,6 @@ class GraphPresenter extends Nette\Application\UI\Presenter
 		$file = "/tmp/wmr-$sensor.png";
 
 		$graphOptions = [
-			'temp' => [
-				'--vertical-label', 'procenta',
-				'DEF:humidity=/var/wmrd/rrd/temp0.rrd:humidity:AVERAGE',
-				'LINE1:humidity#000000',
-			],
-
 			'humidity' => [
 				'--vertical-label', 'procenta',
 				'DEF:humidity=/var/wmrd/rrd/temp0.rrd:humidity:AVERAGE',
@@ -47,8 +41,21 @@ class GraphPresenter extends Nette\Application\UI\Presenter
 			],
 		];
 
-		if (Strings::match($sensor, '/^temp\d+$/')) {
-			$sensor = 'temp';
+		for ($i = 0; $i < 10; $i++) {
+			$graphOptions = array_merge([
+				"temp$i" => [
+					'--vertical-label', 'st C',
+					"DEF:temp_avg=/var/wmrd/rrd/temp$i.rrd:temp:AVERAGE",
+					"DEF:temp_max=/var/wmrd/rrd/temp$i.rrd:temp:MAX",
+					"DEF:temp_min=/var/wmrd/rrd/temp$i.rrd:temp:MIN",
+					"DEF:dewpoint=/var/wmrd/rrd/temp$i.rrd:dewpoint:AVERAGE",
+					'LINE1:temp_max#FF0000:maximální teplota',
+					'LINE1:temp_min#0000FF:minimální teplota',
+					'LINE1:temp_avg#000000:průměrná teplota',
+					'LINE1:dewpoint#00FF00:rosný bod',
+				],
+			], $graphOptions);
+
 		}
 
 		$options = array_merge([
