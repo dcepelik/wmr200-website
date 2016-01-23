@@ -2,7 +2,8 @@
 
 namespace App\Presenters;
 
-use Nette;
+use Nette,
+	Latte;
 
 
 class HomepagePresenter extends Nette\Application\UI\Presenter
@@ -14,7 +15,9 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
 
 		$readings = [];
 		foreach ($yaml as $reading) {
-			$readings[$reading['sensor']] = $reading;
+			foreach ($reading as $name => $value) {
+				$readings[$reading['sensor'] . "." . $name] = $value;
+			}
 		}
 
 		$this->template->readings = $readings;

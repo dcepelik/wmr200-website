@@ -7,7 +7,6 @@ parameters:
 php:
 	date.timezone: Europe/Prague
 
-
 application:
 	errorPresenter: Error
 	mapping:
@@ -20,3 +19,9 @@ session:
 
 services:
 	router: App\RouterFactory::createRouter
+
+
+	nette.latteFactory:
+		setup:
+			- 'App\MyMacros::install(?->getCompiler())'(@self)
+

@@ -1,6 +1,8 @@
 {block content}
 <h1>meteo.gymlit.cz</h1>
 
+{dump $readings}
+
 <div id="sidebar">
 	<h3>Aktuální měření</h3>
 	<table class=lr>
@@ -8,22 +10,24 @@
 			<th rowspan=2>Teplota</th>
 			<td>Skutečná</td>
 			<td >
-				{reading temp1, temp}
+				{reading temp1.temp}
 				<span class=units>&deg;C</span>
 			</td>
 		</tr>
 		<tr>
 			<td>Pocitová</td>
 			<td>
-				{$readings[temp1][temp]}
-				<span class=units>&deg;C</span>
+				<del>
+					{reading temp1.temp}
+					<span class=units>&deg;C</span>
+				</del>
 			</td>
 		</tr>
 
 		<tr>
 			<th colspan=2>Rosný bod</th>
 			<td>
-				{$readings[temp1][dew_point]}
+				{reading temp1.dew_point}
 				<span class=units>&deg;C</span>
 			</td>
 		</tr>
@@ -31,7 +35,7 @@
 		<tr>
 			<th colspan=2>Vzdušná vlhkost</th>
 			<td >
-				{$readings[temp1][humidity]}
+				{reading temp1.humidity}
 				<span class=units>%</span>
 			</td>
 		</tr>
@@ -39,7 +43,7 @@
 		<tr>
 			<th colspan=2>Srážky</th>
 			<td>
-				{$readings[rain][rate]}
+				{reading rain.rate}
 				<span class=units>mm&middot;hod<sup>-1</sup></span>
 			</td>
 		</tr>
@@ -47,7 +51,7 @@
 		<tr>
 			<th colspan=2>Tlak</th>
 			<td>
-				{$readings[baro][pressure]}
+				{reading baro.pressure}
 				<span class=units>hPa</span>
 			</td>
 		</tr>
@@ -55,7 +59,7 @@
 		<tr>
 			<th colspan=2>Předpověď 12-24 h</th>
 			<td>
-				<code>{$readings[baro][forecast]}</code>
+				<code>{reading baro.forecast}</code>
 			</td>
 		</tr>
 
@@ -63,7 +67,7 @@
 			<th rowspan=2>Rychlost větru</th>
 			<td>Poryvy</td>
 			<td>
-				{$readings[wind][gust_speed]}
+				{reading wind.gust_speed}
 				<span class=units>m&middot;s<sup>-1</sup></span>
 			</td>
 		</tr>
@@ -71,7 +75,7 @@
 		<tr>
 			<td>Průměrná</td>
 			<td>
-				{$readings[wind][avg_speed]}
+				{reading wind.avg_speed}
 				<span class=units>m&middot;s<sup>-1</sup></span>
 			</td>
 		</tr>
@@ -79,14 +83,14 @@
 		<tr>
 			<th colspan=2>Směr větru</th>
 			<td>
-				{$readings[wind][dir]}
+				{reading wind.dir}
 			</td>
 		</tr>
 
 		<tr>
 			<th colspan=2>UV index</th>
 			<td>
-				{$readings[uvi][index]}
+				{reading uvi.index}
 				<span class=units>/15</span>
 			</td>
 		</tr>
@@ -97,7 +101,7 @@
 		<tr>
 			<th colspan=2>Teplota</th>
 			<td >
-				{$readings[temp0][temp]}
+				{reading temp0.temp}
 				<span class=units>&deg;C</span>
 			</td>
 		</tr>
@@ -105,7 +109,7 @@
 		<tr>
 			<th colspan=2>Rosný bod</th>
 			<td>
-				{$readings[temp0][dew_point]}
+				{reading temp0.dew_point}
 				<span class=units>&deg;C</span>
 			</td>
 		</tr>
@@ -113,7 +117,7 @@
 		<tr>
 			<th colspan=2>Vzdušná vlhkost</th>
 			<td>
-				{$readings[temp0][humidity]}
+				{reading temp0.humidity}
 				<span class=units>%</span>
 			</td>
 			</td>
@@ -126,21 +130,21 @@
 		<tr>
 			<th>Přenesené pakety</th>
 			<td>
-				{$readings[meta][num_packets]|number:0:'.':' '}
+				{reading meta.num_packets|number:0:'.':' '}
 			</td>
 		</tr>
 
 		<tr>
 			<th>Přenesené rámce</th>
 			<td>
-				{$readings[meta][num_frames]|number:0:'.':' '}
+				{reading meta.num_frames|number:0:'.':' '}
 			</td>
 		</tr>
 
 		<tr>
 			<th>Počet bajtů</th>
 			<td>
-				{$readings[meta][num_bytes]|bytes}
+				{reading meta.num_bytes|bytes}
 			</td>
 		</tr>
 	</table>
