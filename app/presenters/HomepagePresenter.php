@@ -21,5 +21,24 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
 		}
 
 		$this->template->readings = $readings;
+
+		$this->template->addFilter('batteryIcon', function ($s) {
+			if ($s = 'ok') {
+				echo '<img src="/img/accept.png" alt="OK" />';
+			}
+			else {
+				echo '<span class=error>Slabá</span>';
+			}
+		});
+
+		$this->template->addFilter('signalIcon', function ($s) {
+			if ($s = 'ok') {
+				echo '<img src="/img/accept.png" alt="OK" />';
+			}
+			else {
+				echo '<span class=error>Slabý/mimo dosah</span>';
+			}
+		});
+
 	}
 }
