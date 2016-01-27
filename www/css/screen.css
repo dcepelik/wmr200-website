@@ -33,7 +33,7 @@ h1, h2 {
 
 table {
 	border-collapse: collapse;
-	background: #e1edf9;
+	#background: #e1edf9;
 }
 
 table td, table th {
@@ -130,5 +130,9 @@ a.notes-toggle {
 }
 
 tr.even {
-	background: white;
+	#background: white;
+}
+
+table img {
+	position: relative; top: 2px;
 }
