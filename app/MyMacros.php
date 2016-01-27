@@ -20,6 +20,6 @@ class MyMacros extends Latte\Macros\MacroSet
 	public function reading(MacroNode $node, PhpWriter $writer)
 	{
 		return $writer->using($node, $this->getCompiler())
-			->write('echo isset($readings[%node.word]) ? %escape($readings[%node.word]) : "&mdash;"');
+			->write('echo isset($readings[%node.word]) ? %escape($readings[%node.word]) : 0');
 	}
 }

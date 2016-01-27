@@ -19,7 +19,7 @@
 				<span class=units>&deg;C</span>
 			</td>
 		</tr>
-		<tr>
+		<tr class=last>
 			<td>Pocitová</td>
 			<td>
 				<del>
@@ -29,7 +29,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="even last">
 			<th colspan=2>Rosný bod</th>
 			<td>
 				{reading temp1.dew_point}
@@ -37,7 +37,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="last">
 			<th colspan=2>Vzdušná vlhkost</th>
 			<td >
 				{reading temp1.humidity}
@@ -45,7 +45,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class=even>
 			<th rowspan=3>Srážky</th>
 			<td>Okamžité</td>
 			<td>
@@ -62,7 +62,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="even last">
 			<td>Za 1 den</td>
 			<td>
 				{reading rain.accum_24h}
@@ -70,7 +70,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="last">
 			<th colspan=2>Tlak</th>
 			<td>
 				{reading baro.pressure}
@@ -78,7 +78,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="even last">
 			<th colspan=2>Předpověď 12-24 h</th>
 			<td>
 				{capture $forecast}{reading baro.forecast}{/capture}
@@ -110,7 +110,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="last">
 			<td>Průměrná</td>
 			<td>
 				{reading wind.avg_speed}
@@ -118,7 +118,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="even last">
 			<th colspan=2>Směr větru</th>
 			<td>
 				{reading wind.dir}

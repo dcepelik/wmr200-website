@@ -1,5 +1,6 @@
 html, body {
 	font-family: sans-serif;
+	#background: linear-gradient(#0154a4, #a6caee);
 }
 
 #page {
@@ -32,10 +33,11 @@ h1, h2 {
 
 table {
 	border-collapse: collapse;
+	background: #e1edf9;
 }
 
 table td, table th {
-	border: 1px solid #888;
+	border: 1px solid #aaa;
 	padding: 3px 8px;
 	text-align: left;
 }
@@ -125,4 +127,8 @@ a.notes-toggle {
 	background-image: url('/img/help.png');
 	width: 16px;
 	height: 16px;
+}
+
+tr.even {
+	background: white;
 }
