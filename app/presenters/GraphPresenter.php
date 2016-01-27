@@ -16,7 +16,7 @@ class GraphPresenter extends Nette\Application\UI\Presenter
 		$graphOptions = [
 			'humidity' => [
 				'--vertical-label', 'procenta',
-				'DEF:humidity=/var/wmrd/rrd/temp0.rrd:humidity:AVERAGE',
+				'DEF:humidity=/var/wmrd/rrd/temp1.rrd:humidity:AVERAGE',
 				'LINE1:humidity#000000',
 			],
 

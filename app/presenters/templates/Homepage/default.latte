@@ -1,13 +1,18 @@
 {block content}
 <h1>meteo.gymlit.cz</h1>
 
-{dump $readings}
 
 <div id="sidebar">
 	<h3>Aktuální měření</h3>
+	<small>(Aktualizováno {=time()|date:"d.m.Y H:i:s"}.)</small>
+
 	<table class=lr>
 		<tr>
-			<th rowspan=2>Teplota</th>
+			<th rowspan=2>
+				Teplota
+				<a class="notes-toggle" href="#"></a>
+				<div class="notes">Tady může být poznámka, která vysvětluje, jak se měří teplota.</div>
+			</th>
 			<td>Skutečná</td>
 			<td >
 				{reading temp1.temp}
@@ -41,10 +46,27 @@
 		</tr>
 
 		<tr>
-			<th colspan=2>Srážky</th>
+			<th rowspan=3>Srážky</th>
+			<td>Okamžité</td>
 			<td>
 				{reading rain.rate}
 				<span class=units>mm&middot;hod<sup>-1</sup></span>
+			</td>
+		</tr>
+
+		<tr>
+			<td>Za 1 hod.</td>
+			<td>
+				{reading rain.accum_hour}
+				<span class=units>mm</span>
+			</td>
+		</tr>
+
+		<tr>
+			<td>Za 1 den</td>
+			<td>
+				{reading rain.accum_24h}
+				<span class=units>mm</span>
 			</td>
 		</tr>
 
@@ -59,7 +81,23 @@
 		<tr>
 			<th colspan=2>Předpověď 12-24 h</th>
 			<td>
-				<code>{reading baro.forecast}</code>
+				{capture $forecast}{reading baro.forecast}{/capture}
+
+				{if $forecast == cloudy}
+					Oblačno
+				{elseif $forecast == clear}
+					Jasno
+				{elseif $forecast == partly_cloudy-day}
+					Ve dne polojasno
+				{elseif $forecast == partly_cloudy-night}
+					V noci polojasno
+				{elseif $forecast == sunny}
+					Slunečno
+				{elseif $forecast == rainy}
+					Bude pršet
+				{elseif $forecast == snowy}
+					Bude sněžit
+				{/if}
 			</td>
 		</tr>
 
@@ -90,11 +128,89 @@
 		<tr>
 			<th colspan=2>UV index</th>
 			<td>
-				{reading uvi.index}
+				<del>{reading uvi.index}</del>
 				<span class=units>/15</span>
 			</td>
 		</tr>
 	</table>
+
+	<h3>Stav součástí systému</h3>
+	<table class=tc>
+		<tr>
+			<th>Senzor</th>
+			<th>Baterie</th>
+			<th>Signál</th>
+		</tr>
+
+		<tr>
+			<td>Anemometr</td>
+			<td>{block |batteryIcon}{reading status.wind_bat}{/block}</td>
+			<td>{block |signalIcon}{reading status.wind_sensor}{/block}</td>
+		</tr>
+
+		<tr>
+			<td>Srážkoměr</td>
+			<td>{block |batteryIcon}{reading status.rain_bat}{/block}</td>
+			<td>{block |signalIcon}{reading status.rain_sensor}{/block}</td>
+		</tr>
+
+		<tr>
+			<td>UV senzor</td>
+			<td>{block |batteryIcon}{reading status.uv_bat}{/block}</td>
+			<td>{block |signalIcon}{reading status.uv_sensor}{/block}</td>
+		</tr>
+
+		<tr>
+			<td>Teplotní čidlo č. 1</td>
+			<td>{block |batteryIcon}{reading status.temp_bat}{/block}</td>
+			<td>{block |signalIcon}{reading status.temp_sensor}{/block}</td>
+		</tr>
+
+		<tr>
+			<td>RTC obvod</td>
+			<td>&mdash;</td>
+			<td>{block |signalIcon}{reading status.rtc_signal_level}{/block}</td>
+		</tr>
+	</table>
+
+	<h3>Metadata</h3>
+	<table class=lr>
+		<tr>
+			<th>Přenesené pakety</th>
+			<td>
+				{block |number:0:'.':' '}{reading meta.num_packets}{/block}
+			</td>
+		</tr>
+
+		<tr>
+			<th>Chybné pakety</th>
+			<td>
+				{block |number:0:'.':' '}{reading meta.num_failed}{/block}
+			</td>
+		</tr>
+
+		<tr>
+			<th>Přenesené rámce</th>
+			<td>
+				{block |number:0:'.':' '}{reading meta.num_frames}{/block}
+			</td>
+		</tr>
+
+		<tr>
+			<th>Počet bajtů</th>
+			<td>
+				{block |bytes}{reading meta.num_bytes|bytes}{/block}
+			</td>
+		</tr>
+
+		<tr>
+			<th><code>wmrd</code> uptime</th>
+			<td>
+				{reading meta.uptime}
+			</td>
+		</tr>
+	</table>
+
 
 	<h3>Měření konzole</h3>
 	<table class=lr>
@@ -123,70 +239,9 @@
 			</td>
 		</tr>
 	</table>
-
-
-	<h3>Metadata</h3>
-	<table class=lr>
-		<tr>
-			<th>Přenesené pakety</th>
-			<td>
-				{reading meta.num_packets|number:0:'.':' '}
-			</td>
-		</tr>
-
-		<tr>
-			<th>Přenesené rámce</th>
-			<td>
-				{reading meta.num_frames|number:0:'.':' '}
-			</td>
-		</tr>
-
-		<tr>
-			<th>Počet bajtů</th>
-			<td>
-				{reading meta.num_bytes|bytes}
-			</td>
-		</tr>
-	</table>
-
-	<h3>Stav součástí systému</h3>
-	<table class=tc>
-		<tr>
-			<th>Senzor</th>
-			<th>Baterie</th>
-			<th>Signál</th>
-		</tr>
-
-		<tr>
-			<td>Anemometr</td>
-			<td><img src="/img/accept.png" alt="OK" /></td>
-			<td><img src="/img/accept.png" alt="OK" /></td>
-		</tr>
-
-		<tr>
-			<td>Srážkoměr</td>
-			<td><img src="/img/accept.png" alt="OK" /></td>
-			<td><img src="/img/accept.png" alt="OK" /></td>
-		</tr>
-
-		<tr>
-			<td>UV senzor</td>
-			<td><img src="/img/accept.png" alt="OK" /></td>
-			<td><img src="/img/accept.png" alt="OK" /></td>
-		</tr>
-
-		<tr>
-			<td>Teplotní čidlo č. 1</td>
-			<td class=error>Slabá</td>
-			<td><img src="/img/accept.png" alt="OK" /></td>
-		</tr>
-
-		<tr>
-			<td>RTC obvod</td>
-			<td>&mdash;</td>
-			<td><img src="/img/accept.png" alt="OK" /></td>
-		</tr>
-	</table>
+	<p>
+		<small>(Konzole se nachází v serverovně.)</small>
+	</p>
 </div>
 
 <div id="main">
@@ -199,23 +254,40 @@
 
 	<h2>Data zapisovače</h2>
 
-	<h3>Teplota</h3>
-	<p>
-		Teplota je měřena cca 10 m nad zemí.
-	</p>
-	<img class="ajax" src="graph/temp1/12h.png" alt="" />
+	{foreach [
+		temp1 => Teplota,
+		pressure => 'Atmosférický tlak',
+		humidity => Vlhkost,
+		rain => Srážky,
+		wind => Vítr] as $sensor => $name}
 
-	<h3>Tlak</h3>
-	<img src="graph/pressure/12h.png" alt="" />
+		<div class="graph">
+			<h3>{$name}</h3>
+			{foreach [
+				Den => '1d',
+				Týden => '1w',
+				Měsíc => '1m',
+				Rok => '1y' ] as $rangeName => $range}
 
-	<h3>Rychlost větru</h3>
-	<img src="graph/wind/12h.png" alt="" />
+				<a n:class="changeGraph, $iterator->first ? active"
+					href="#{$sensor}-{$range}"
+					data-range="{$range}"
+					data-graph="{$sensor}">{$rangeName}</a>
 
-	<h3>Vlhkost</h3>
-	<img src="graph/humidity/12h.png" alt="" />
+				{sep}&mdash;{/sep}
 
-	<h3>Srážky</h3>
-	<img src="graph/rain/12h.png" alt="" />
+				{if $iterator->first}
+					<img n:capture="$image"
+						id="{$sensor}"
+						src="/graph/{$sensor}/{$range}.png"
+						alt="{$name} ({$rangeName})"
+						class=ajax />
+				{/if}
+			{/foreach}
+
+			{!$image}
+		</div>
+	{/foreach}
 </div>
 
 <div class="cb"></div>

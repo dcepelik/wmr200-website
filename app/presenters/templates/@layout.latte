@@ -14,12 +14,31 @@
 				$("img").each(function(el) {
 					var $el = $(this);
 					var src = $el.attr('src').replace(/\?timestamp=.*/, '');
-					console.log(src);
 					$el.attr('src', src + '?timestamp=' + date.getTime())
 				});
 
 				setTimeout(reloadGraphs, 5000);
 			}
+
+			$(document).ready(function() {
+				$("a.changeGraph").click(function() {
+					var $el = $(this);
+
+					var graph = $el.data('graph');
+					var range = $el.data('range');
+
+					$("img#" + graph).attr('src', "/graph/" + graph + "/" + range + ".png");
+					$el.addClass('active');
+					$el.siblings('a').removeClass('active');
+				});
+
+				$("a.notes-toggle").click(function() {
+					$(this).siblings('div.notes').toggle();
+				});
+				$(".notes").click(function() {
+					$(this).toggle();
+				});
+			});
 
 			$(document).ready(function () {
 				setTimeout(reloadGraphs, 5000);
@@ -34,7 +53,17 @@
 			<div id="footer">
 				<p>
 					Powered by
-						<a href="https://github.com/dcepelik/wmr200_tools">wmr200_tools</a> &copy; David Čepelí 2015
+					<a href="https://github.com/dcepelik/wmr200_tools">wmr200-tools</a>
+					&copy; David Čepelík 2015
+				</p>
+
+				<p>
+					This free software relies on
+					Nette Framework,
+					<code>librrd</code>,
+					<code>hidapi-libusb</code> and
+					Arch Linux
+					to do the job.
 				</p>
 			</div>
 		</div>
