@@ -41,4 +41,12 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
 		});
 
 	}
+
+
+	public function handleInvalidateReadings()
+	{
+		if ($this->ajax) {
+			$this->invalidateControl('readings');
+		}
+	}
 }

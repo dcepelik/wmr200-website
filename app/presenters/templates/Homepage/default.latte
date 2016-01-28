@@ -134,10 +134,6 @@
 		</tr>
 	</table>
 
-	<p>
-		<small>(Aktualizováno {=time()|date:"d.m.Y H:i:s"}.)</small>
-	</p>
-
 	<h3>Měření v budově</h3>
 	<table class=lr>
 		<tr>
@@ -166,7 +162,10 @@
 		</tr>
 	</table>
 	<p>
-		<small>(Konzole se prozatím nachází v serverovně.)</small>
+		<small>
+			(Konzole se prozatím nachází v serverovně. Všechna měření
+			jsou aktuální k {=time()|date:"%d.%m.%Y %H:%M:%S"}.)
+		</small>
 	</p>
 
 	<h3>Stav součástí systému</h3>
@@ -245,6 +244,8 @@
 			</td>
 		</tr>
 	</table>
+
+	<a id="invalidateReadings" n:href="invalidateReadings!" class="ajax">Obnovit.</a>
 </div>
 {/snippet}
 

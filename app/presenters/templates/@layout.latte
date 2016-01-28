@@ -9,15 +9,18 @@
 		<script src="{$baseUri}/js/nette.ajax.js"></script>
 
 		<script>
-			function reloadGraphs() {
+			function reloadData() {
 				var date = new Date();
+
 				$("img").each(function(el) {
 					var $el = $(this);
 					var src = $el.attr('src').replace(/\?timestamp=.*/, '');
 					$el.attr('src', src + '?timestamp=' + date.getTime())
 				});
 
-				setTimeout(reloadGraphs, 5000);
+				$("a#invalidateReadings").click();
+
+				setTimeout(reloadData, 5000);
 			}
 
 			$(document).ready(function() {
@@ -41,7 +44,8 @@
 			});
 
 			$(document).ready(function () {
-				setTimeout(reloadGraphs, 5000);
+				setTimeout(reloadData, 5000);
+				$("#invalidateReadings").hide();
 			});
 
 			$(function () {

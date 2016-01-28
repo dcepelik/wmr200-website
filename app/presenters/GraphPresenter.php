@@ -57,9 +57,6 @@ class GraphPresenter extends Nette\Application\UI\Presenter
 				'LINE1:temp_min#0000FF:minimální teplota',
 				'LINE1:temp_avg#000000:průměrná teplota',
 				'LINE1:dewpoint#00FF00:rosný bod',
-				'GPRINT:temp_min:MIN:"Minimální\:%8.2lf %s\n"',
-				'GPRINT:temp_avg:AVERAGE:"Průměrná\:%8.2lf %s"',
-				'GPRINT:temp_max:MAX:"Maximální\:%8.2lf %s\n"',
 			];
 
 		}
