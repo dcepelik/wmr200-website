@@ -2,9 +2,9 @@
 <h1>meteo.gymlit.cz</h1>
 
 
+{snippet readings}
 <div id="sidebar">
 	<h3>Venkovní měření</h3>
-	<small>(Aktualizováno {=time()|date:"d.m.Y H:i:s"}.)</small>
 
 	<table class=lr>
 		<tr>
@@ -134,6 +134,10 @@
 		</tr>
 	</table>
 
+	<p>
+		<small>(Aktualizováno {=time()|date:"d.m.Y H:i:s"}.)</small>
+	</p>
+
 	<h3>Měření v budově</h3>
 	<table class=lr>
 		<tr>
@@ -242,6 +246,7 @@
 		</tr>
 	</table>
 </div>
+{/snippet}
 
 <div id="main">
 	<p>
