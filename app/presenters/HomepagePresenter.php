@@ -23,7 +23,7 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
 		$this->template->readings = $readings;
 
 		$this->template->addFilter('batteryIcon', function ($s) {
-			if ($s = 'ok') {
+			if ($s == 'ok') {
 				echo '<img src="/img/accept.png" alt="OK" />';
 			}
 			else {
@@ -32,7 +32,7 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
 		});
 
 		$this->template->addFilter('signalIcon', function ($s) {
-			if ($s = 'ok') {
+			if ($s == 'ok') {
 				echo '<img src="/img/accept.png" alt="OK" />';
 			}
 			else {
